@@ -28,8 +28,8 @@ class ListAdapter(childrenList: List<Children>) : RecyclerView.Adapter<ListAdapt
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val child = childrenList.get(position)
-        holder.title.setText(child.data.title)
+        val child = childrenList[position]
+        holder.title.text = child.data.title
         GlideApp.with(context.applicationContext)
             .load(child.data.thumbnail)
             .fitCenter()
@@ -40,10 +40,7 @@ class ListAdapter(childrenList: List<Children>) : RecyclerView.Adapter<ListAdapt
         lateinit var title: TextView
         lateinit var thumbnail: ImageView
 
-        var mView: View
-
         init {
-            mView = view
             initialize(view)
             setListeners(view)
         }

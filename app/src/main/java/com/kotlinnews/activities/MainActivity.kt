@@ -22,7 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
-    private var BASE_URL: String = "https://www.reddit.com/"
+    private var BASE_URL: String = "https://www.reddit.com/r/kotlin/"
     private var retrofit: Retrofit
     private var redditApi: RedditApi
     private var childrenList: List<Children> = ArrayList()

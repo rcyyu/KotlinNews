@@ -31,7 +31,7 @@ class DisplayItemActivity : AppCompatActivity() {
         loadImageThumbnail()
 
         urlTextView.setOnClickListener { view ->
-            if (url !== null && url !== "") {
+            if (url !== "") {
                 val intent = Intent(view.context, WebviewActivity::class.java)
                 intent.putExtra("url", url)
                 startActivity(intent)
