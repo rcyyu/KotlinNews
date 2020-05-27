@@ -59,11 +59,13 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    // Retrofit Moshi
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    // okhttp3 logger (for debugging Retrofit)
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    // RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
     kapt "android.arch.lifecycle:compiler:1.1.1"
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 }
