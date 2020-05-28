@@ -1,10 +1,10 @@
 package com.kotlinnews.activities
 
+import android.media.session.MediaSession
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.os.Parcelable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,10 +25,12 @@ class MainActivity : AppCompatActivity() {
     private var BASE_URL: String = "https://www.reddit.com/r/kotlin/"
     private var retrofit: Retrofit
     private var redditApi: RedditApi
-    private var childrenList: List<Children> = ArrayList()
+    private var childrenList: MutableList<Children> = ArrayList()
+    private lateinit var after: String
     private lateinit var recyclerView: RecyclerView
     private var adapter: ListAdapter = ListAdapter(childrenList)
     private var interceptor = HttpLoggingInterceptor()
+    private lateinit var recyclerViewState: Parcelable
     private var client: OkHttpClient
 
     init {
@@ -46,11 +48,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        var manager = LinearLayoutManager(this)
-        recyclerView.layoutManager = manager
         recyclerView.setHasFixedSize(true)
         loadFeed()
         setupRecyclerView()
+        recyclerViewState = recyclerView.layoutManager?.onSaveInstanceState()!!
+
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(this@MainActivity, "Last", Toast.LENGTH_LONG).show()
+                    recyclerViewState = recyclerView.layoutManager?.onSaveInstanceState()!!
+                    loadFeed(after)
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -59,12 +71,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.itemAnimator = DefaultItemAnimator()
     }
 
-    private fun loadFeed() {
-        val call = redditApi.getData()
+    private fun loadFeed(afterPost: String = "") {
+        val call = redditApi.getData(afterPost)
         call.enqueue(object : Callback<Feed> {
             override fun onResponse(call: Call<Feed>, response: Response<Feed>) {
-                val childrenList = response.body()!!.data.children
+                val responseBody = response.body()!!
+                childrenList.addAll(responseBody.data.children)
+                after = responseBody.data.after
                 adapter = ListAdapter(childrenList)
+                adapter.notifyDataSetChanged()
+                recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
                 recyclerView.adapter = adapter
             }
 
