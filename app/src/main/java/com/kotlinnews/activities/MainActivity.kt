@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(this@MainActivity, "Last", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "Loading Posts", Toast.LENGTH_LONG).show()
                     recyclerViewState = recyclerView.layoutManager?.onSaveInstanceState()!!
                     loadFeed(after)
                 }
