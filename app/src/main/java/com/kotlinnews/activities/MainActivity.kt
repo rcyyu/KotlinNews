@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
                 childrenList.addAll(responseBody.data.children)
                 after = responseBody.data.after
                 adapter = ListAdapter(childrenList)
-                adapter.notifyDataSetChanged()
                 recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                adapter.notifyDataSetChanged()
                 recyclerView.adapter = adapter
             }
 
