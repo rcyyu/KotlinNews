@@ -22,9 +22,9 @@ class DisplayItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_item)
 
-        thumbnailImageView = findViewById<ImageView>(R.id.itemthumbnail)
-        bodyTextView = findViewById<TextView>(R.id.itembody)
-        urlTextView = findViewById<TextView>(R.id.itemurl)
+        thumbnailImageView = findViewById(R.id.itemthumbnail)
+        bodyTextView = findViewById(R.id.itembody)
+        urlTextView = findViewById(R.id.itemurl)
         getBundleExtras()
         setTitle(title)
         setTextView()

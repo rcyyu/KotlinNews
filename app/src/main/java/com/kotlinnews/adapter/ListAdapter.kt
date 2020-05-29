@@ -37,22 +37,14 @@ class ListAdapter(childrenList: List<Children>) : RecyclerView.Adapter<ListAdapt
     }
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
-        lateinit var title: TextView
-        lateinit var thumbnail: ImageView
+        var title: TextView
+        var thumbnail: ImageView
 
         init {
-            initialize(view)
-            setListeners(view)
-        }
-
-        private fun setListeners(view: View) {
-            thumbnail.setOnClickListener(this)
-            view.setOnClickListener(this)
-        }
-
-        private fun initialize(view: View) {
             title = view.findViewById(R.id.title) as TextView
             thumbnail = view.findViewById(R.id.thumbnail) as ImageView
+            thumbnail.setOnClickListener(this)
+            view.setOnClickListener(this)
         }
 
         private fun getChildPosition() {

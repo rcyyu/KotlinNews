@@ -13,7 +13,7 @@ class WebviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
-        webView = findViewById<WebView>(R.id.web)
+        webView = findViewById(R.id.web)
         webView.settings.javaScriptEnabled = true
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
@@ -32,25 +32,4 @@ class WebviewActivity : AppCompatActivity() {
         val b = intent.extras
         url = b?.getString("url").toString()
     }
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
 }
